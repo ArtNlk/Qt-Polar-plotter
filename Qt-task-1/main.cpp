@@ -1,8 +1,16 @@
-#include <QCoreApplication>
+#include <QApplication>
+
+#include "polargraphwindow.h"
+#include "datapaneldialog.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
+
+    PolarGraphWindow *mainWindow =new PolarGraphWindow;
+    mainWindow->show();
+//    DataPanelDialog* dialog = new DataPanelDialog;
+//    dialog->show();
 
     return a.exec();
 }
