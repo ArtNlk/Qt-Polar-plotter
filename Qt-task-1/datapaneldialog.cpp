@@ -25,3 +25,15 @@ void DataPanelDialog::on_buttonBox_accepted()
     emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
 }
 
+
+void DataPanelDialog::on_fromRadSpinbox_valueChanged(double arg1)
+{
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
+}
+
+
+void DataPanelDialog::on_toRadSpinbox_valueChanged(double arg1)
+{
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
+}
+

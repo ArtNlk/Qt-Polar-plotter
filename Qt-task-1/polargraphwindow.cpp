@@ -76,8 +76,9 @@ void PolarGraphWindow::paintEvent(QPaintEvent *pEvent)
 
 void PolarGraphWindow::resizeEvent(QResizeEvent *event)
 {
-    plot = QPixmap(ui.centralwidget->width(),ui.centralwidget->height());
-    labelPixmap = QPixmap(ui.centralwidget->width(),ui.centralwidget->height());
+    double plotSize = std::min(ui.centralwidget->width(),ui.centralwidget->height());
+    plot = QPixmap(plotSize,plotSize);
+    labelPixmap = QPixmap(plotSize,plotSize);
     plotter.plot(&plot,currentFunction);
-    ui.plotLabel->resize(ui.centralwidget->size());
+    ui.plotLabel->resize(plotSize,plotSize);
 }

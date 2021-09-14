@@ -14,6 +14,12 @@
    <string>Polar plotter</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>128</width>
+     <height>128</height>
+    </size>
+   </property>
    <widget class="QLabel" name="plotLabel">
     <property name="geometry">
      <rect>
@@ -24,7 +30,7 @@
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
      <string/>

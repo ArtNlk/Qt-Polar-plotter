@@ -22,6 +22,10 @@ public slots:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_fromRadSpinbox_valueChanged(double arg1);
+
+    void on_toRadSpinbox_valueChanged(double arg1);
+
 private:
     Ui::DataPanelDialog ui;
 
