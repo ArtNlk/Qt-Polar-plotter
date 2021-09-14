@@ -10,7 +10,7 @@ public:
     ~PolarFunction();
 
 public:
-    virtual float eval(float theta);
+    virtual double eval(double theta);
     virtual std::string getName() const;
 };
 

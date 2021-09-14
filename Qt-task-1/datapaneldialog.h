@@ -13,11 +13,14 @@ public:
     DataPanelDialog(QWidget *parent = nullptr);
 
 signals:
-    void onSettingsChanged(int vectorIndex, float fromRad, float toRad);
+    void onSettingsChanged(int vectorIndex, double fromRad, double toRad);
 
 public slots:
-    void setPlotLimits(float fromRad, float toRad);
+    void setPlotLimits(double fromRad, double toRad);
     void setFunctions(QVector<PolarFunction*> functions);
+
+private slots:
+    void on_buttonBox_accepted();
 
 private:
     Ui::DataPanelDialog ui;

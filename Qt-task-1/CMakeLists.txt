@@ -20,8 +20,9 @@ find_package(Qt6Core)
 #find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(MAIN_SOURCES main.cpp
-    polargraphwindow.cpp polargraphwindow.h
-    datapaneldialog.h datapaneldialog.cpp)
+    polargraphwindow.h polargraphwindow.cpp
+    datapaneldialog.h datapaneldialog.cpp
+    polarplotter.h polarplotter.cpp)
 
 set(MAIN_FORMS
     PolarGraphWindow.ui

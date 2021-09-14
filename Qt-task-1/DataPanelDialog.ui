@@ -58,7 +58,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="doubleSpinBox">
+  <widget class="QDoubleSpinBox" name="fromRadSpinbox">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -126,7 +126,7 @@
     <string>радиан</string>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+  <widget class="QDoubleSpinBox" name="toRadSpinbox">
    <property name="geometry">
     <rect>
      <x>100</x>

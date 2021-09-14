@@ -7,7 +7,7 @@ ArchSpiralFunc::ArchSpiralFunc()
 
 }
 
-float ArchSpiralFunc::eval(float theta)
+double ArchSpiralFunc::eval(double theta)
 {
     return 0.1*theta;
 }

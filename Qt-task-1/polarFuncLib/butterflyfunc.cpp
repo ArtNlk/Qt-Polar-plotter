@@ -9,7 +9,7 @@ ButterflyFunc::ButterflyFunc()
 
 }
 
-float ButterflyFunc::eval(float theta)
+double ButterflyFunc::eval(double theta)
 {
     return pow(cos(5*theta),2) + sin(3*theta) + 0.3;
 }

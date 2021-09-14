@@ -5,7 +5,7 @@ PolarFunction::PolarFunction()
 
 }
 
-float PolarFunction::eval(float theta)
+double PolarFunction::eval(double theta)
 {
     return 1;
 }

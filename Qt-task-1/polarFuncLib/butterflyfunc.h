@@ -11,7 +11,7 @@ private:
 public:
     ButterflyFunc();
 
-    float eval(float theta) override;
+    double eval(double theta) override;
     std::string getName() const override;
 };
 
