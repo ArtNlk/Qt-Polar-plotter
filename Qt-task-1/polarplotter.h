@@ -15,7 +15,7 @@ public:
 
     void plot(QPixmap* plot, PolarFunction* plottedFunc);
     void setPlotLimits(double _plotFromRad,double _plotToRad);
-    void setResolution(unsigned int _resolution);
+    void setResolution( int _resolution);
 
     void setBackgroundColor(QColor color);
     void setAxisPen(QPen pen);
@@ -29,7 +29,7 @@ public:
 private:
     double plotFromRad;
     double plotToRad;
-    unsigned int resolution;
+     int resolution;
 
     QPointF polarToCartesianTransform(const QPointF point);
     QPointF cartesianToPolarTransform(const QPointF point);

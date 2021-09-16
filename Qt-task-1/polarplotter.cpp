@@ -75,9 +75,9 @@ void PolarPlotter::setPlotLimits(double _plotFromRad, double _plotToRad)
     plotToRad = _plotToRad;
 }
 
-void PolarPlotter::setResolution(unsigned int _resolution)
+void PolarPlotter::setResolution( int _resolution)
 {
-    if(resolution == 0)
+    if(_resolution == 0)
     {
         throw std::invalid_argument("PolarPlotter::setResolution zero resolution is not allowed");
     }
