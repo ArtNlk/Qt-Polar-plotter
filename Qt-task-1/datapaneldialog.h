@@ -13,10 +13,11 @@ public:
     DataPanelDialog(QWidget *parent = nullptr);
 
 signals:
-    void onSettingsChanged(int vectorIndex, double fromRad, double toRad);
+    void onSettingsChanged(int vectorIndex, double fromRad, double toRad, int resolution);
 
 public slots:
     void setPlotLimits(double fromRad, double toRad);
+    void setResolution(int resolution);
     void setFunctions(QVector<PolarFunction*> functions);
 
 private slots:
@@ -25,6 +26,10 @@ private slots:
     void on_fromRadSpinbox_valueChanged(double arg1);
 
     void on_toRadSpinbox_valueChanged(double arg1);
+
+    void on_functionsComboBox_activated(int index);
+
+    void on_resolutionSpinbox_valueChanged(int arg1);
 
 private:
     Ui::DataPanelDialog ui;

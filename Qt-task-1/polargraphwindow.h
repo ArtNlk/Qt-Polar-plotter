@@ -22,7 +22,7 @@ signals:
 public slots:
     void onOpenDataPanelAction();
     void onAboutAction();
-    void changePlotSettings(int functionListIndex, double fromRad, double toRad);
+    void changePlotSettings(int functionListIndex, double fromRad, double toRad, int resolution);
 
 protected:
     Ui::PolarGraphWindow ui;
@@ -31,6 +31,7 @@ protected:
     PolarFunction* currentFunction;
     double fromRad;
     double toRad;
+    int resolution;
 
     PolarPlotter plotter;
     QPixmap plot;

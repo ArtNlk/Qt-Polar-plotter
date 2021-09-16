@@ -5,6 +5,8 @@ project(Qt-task-1 LANGUAGES CXX)
 set(POLARLIB_SOURCES polarfunc.h
     polarfunction.cpp polarfunction.h
     archspiralfunc.h archspiralfunc.cpp
-    butterflyfunc.h butterflyfunc.cpp)
+    butterflyfunc.h butterflyfunc.cpp
+    rosecurvefunc.h rosecurvefunc.cpp
+    headfunc.h headfunc.cpp)
 
 add_library(PolarFuncLib STATIC ${POLARLIB_SOURCES})

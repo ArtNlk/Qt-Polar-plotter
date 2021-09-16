@@ -11,6 +11,11 @@ void DataPanelDialog::setPlotLimits(double fromRad, double toRad)
     ui.toRadSpinbox->setValue(toRad);
 }
 
+void DataPanelDialog::setResolution(int resolution)
+{
+    ui.resolutionSpinbox->setValue(resolution);
+}
+
 void DataPanelDialog::setFunctions(QVector<PolarFunction*> functions)
 {
     ui.functionsComboBox->clear();
@@ -22,18 +27,42 @@ void DataPanelDialog::setFunctions(QVector<PolarFunction*> functions)
 
 void DataPanelDialog::on_buttonBox_accepted()
 {
-    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value(), ui.resolutionSpinbox->value());
 }
 
 
 void DataPanelDialog::on_fromRadSpinbox_valueChanged(double arg1)
 {
-    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
+    ui.toRadSpinbox->setMinimum(arg1);
+    if(this->isVisible())
+    {
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value(), ui.resolutionSpinbox->value());
+    }
 }
 
 
 void DataPanelDialog::on_toRadSpinbox_valueChanged(double arg1)
 {
-    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value());
+    ui.fromRadSpinbox->setMaximum(arg1);
+    if(this->isVisible())
+    {
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value(), ui.resolutionSpinbox->value());
+    }
 }
 
+void DataPanelDialog::on_functionsComboBox_activated(int index)
+{
+    if(this->isVisible())
+    {
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value(), ui.resolutionSpinbox->value());
+    }
+}
+
+
+void DataPanelDialog::on_resolutionSpinbox_valueChanged(int arg1)
+{
+    if(this->isVisible())
+    {
+    emit onSettingsChanged(ui.functionsComboBox->currentIndex(),ui.fromRadSpinbox->value(),ui.toRadSpinbox->value(), ui.resolutionSpinbox->value());
+    }
+}

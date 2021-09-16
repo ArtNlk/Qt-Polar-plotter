@@ -22,16 +22,19 @@ PolarPlotter::PolarPlotter()
 
     maxBoundaryPen.setColor(QColor::fromRgb(128,128,128));
     maxBoundaryPen.setWidth(2);
+
+    redPen.setWidth(4);
+    redPen.setColor(QColor::fromRgb(255,0,0));
 }
 
 void PolarPlotter::plot(QPixmap *plot, PolarFunction* plottedFunc)
 {
-    std::vector<QPointF> results(resolution);
+    std::vector<QPointF> results(resolution+1);
 
     double plotRange = plotToRad-plotFromRad;
     QPointF maxDistPoint = QPoint(0,0);
 
-    for(int i = 0; i < resolution; i++)
+    for(int i = 0; i < resolution+1; i++)
     {
         double theta = plotFromRad + i*plotRange/resolution;
         double r = plottedFunc->eval(theta);
@@ -53,7 +56,7 @@ void PolarPlotter::plot(QPixmap *plot, PolarFunction* plottedFunc)
     drawAxis(painter,plot,maxDistPoint);
 
     painter.setPen(plotPen);
-    for(int i = 1; i < resolution; i++)
+    for(int i = 1; i < resolution + 1; i++)
     {
         QPointF newPoint = polarToPixmapTransform(results[i],plot,maxDistPoint);
         painter.drawLine(prevPoint,newPoint);
@@ -147,16 +150,16 @@ QPointF PolarPlotter::cartesianToPolarTransform(const QPointF point)
 QPointF PolarPlotter::plotToPixmapTranform(const QPointF point, const QPixmap *map, const QPointF maxPoint)
 {
     QPointF output;
-    double xRatio = (point.x()/maxPoint.x());
-    double yRatio = (point.y()*-1/maxPoint.y());
+    int mapSize = std::min(map->width(), map->height());
+    double plotSize = std::max(maxPoint.x(),maxPoint.y());
+    double xRatio = (point.x()/(plotSize*2));
+    double yRatio = (point.y()*-1/(plotSize*2));
 
-    double plotspaceX = xRatio*map->size().width()/2;
-    double plotspaceY = yRatio*map->size().height()/2;
+    double mapspaceX = xRatio*mapSize + mapSize/2;
+    double mapspaceY = yRatio*mapSize + mapSize/2;
 
-    double correctX = plotspaceX + map->size().width()/2;
-    double correctY = plotspaceY + map->size().height()/2;
-    output.setX(correctX);
-    output.setY(correctY);
+    output.setX(mapspaceX);
+    output.setY(mapspaceY);
 
     return output;
 }
@@ -169,28 +172,50 @@ QPointF PolarPlotter::polarToPixmapTransform(const QPointF point, const QPixmap 
 
 void PolarPlotter::drawAxis(QPainter& painter, QPixmap *map, QPointF maxDistPoint)
 {
-    QPen prevPen = painter.pen();
+    painter.save();
+    int mapSize = std::min(map->width(),map->height());
+    double plotSize = std::max(maxDistPoint.x(),maxDistPoint.y());
     painter.setPen(axisPen);
-    painter.drawLine(0,map->size().height()/2,map->size().width(),map->size().height()/2);
-    painter.drawLine(map->size().width()/2,0,map->size().width()/2,map->size().height());
+    painter.drawLine(0,mapSize/2,mapSize,mapSize/2);
+    painter.drawLine(mapSize/2,0,mapSize/2,mapSize);
 
 
     QPointF minBoundaryEnd = cartesianToPolarTransform(maxDistPoint);
     minBoundaryEnd.ry() = plotFromRad;
+    QPointF minBoundaryTextPos = cartesianToPolarTransform(QPointF(plotSize,plotSize));
+    minBoundaryTextPos.rx() /= sqrt(2) / 0.8;
+    minBoundaryTextPos.ry() = plotFromRad;
 
     QPointF maxBoundaryEnd = minBoundaryEnd;
     maxBoundaryEnd.ry() = plotToRad;
+    QPointF maxBoundaryTextPos = cartesianToPolarTransform(QPointF(plotSize,plotSize));
+    maxBoundaryTextPos.rx() /= sqrt(2) / 0.8;
+    maxBoundaryTextPos.ry() = plotToRad;
+
     minBoundaryEnd = polarToPixmapTransform(minBoundaryEnd,map,maxDistPoint);
     maxBoundaryEnd = polarToPixmapTransform(maxBoundaryEnd,map,maxDistPoint);
+    minBoundaryTextPos = polarToPixmapTransform(minBoundaryTextPos,map,maxDistPoint);
+    maxBoundaryTextPos = polarToPixmapTransform(maxBoundaryTextPos,map,maxDistPoint);
 
     QPointF origin = QPointF(map->height()/2,map->width()/2);
 
+    QBrush backgroundBrush = QBrush(painter.background());
+    backgroundBrush.setColor(backgroundColor);
+
+    painter.setBackgroundMode(Qt::BGMode::OpaqueMode);
+    painter.setBackground(backgroundBrush);
     painter.setPen(minBoundaryPen);
     painter.drawLine(origin,minBoundaryEnd);
+    painter.drawText(minBoundaryTextPos,QString("%1 рад.").arg(plotFromRad));
+    //painter.setPen(redPen);
+    //painter.drawPoint(minBoundaryTextPos);
     painter.setPen(maxBoundaryPen);
     painter.drawLine(origin,maxBoundaryEnd);
+    painter.drawText(maxBoundaryTextPos,QString("%1 рад.").arg(plotToRad));
+    //painter.setPen(redPen);
+    //painter.drawPoint(maxBoundaryTextPos);
 
-    painter.setPen(prevPen);
+    painter.restore();
 }
 
 double PolarPlotter::distFromOrigin(QPointF point)

@@ -13,6 +13,8 @@ PolarGraphWindow::PolarGraphWindow(QWidget *parent) : QMainWindow(parent)
 
     functions.append(new ArchSpiralFunc());
     functions.append(new ButterflyFunc());
+    functions.append(new RoseCurveFunc());
+    functions.append(new HeadFunc());
 
     connect(ui.exitAction, &QAction::triggered, this, &PolarGraphWindow::close);
     connect(ui.dataPanelAction, &QAction::triggered, this, &PolarGraphWindow::onOpenDataPanelAction);
@@ -23,11 +25,12 @@ PolarGraphWindow::PolarGraphWindow(QWidget *parent) : QMainWindow(parent)
     currentFunction = functions[0];
     fromRad = 0;
     toRad = 3.14*2;
+    resolution = 500;
     QString message = QString("%1 plotted from %2 rad to %3 rad")
             .arg(QString::fromStdString(currentFunction->getName()), QString::number(fromRad,'f',2), QString::number(toRad,'f',2));
     statusBar()->showMessage(message);
 
-    plotter.setResolution(500);
+    plotter.setResolution(resolution);
     plotter.setPlotLimits(fromRad,toRad);
     plot = QPixmap(ui.centralwidget->width(),ui.centralwidget->height());
     labelPixmap = QPixmap(ui.centralwidget->width(),ui.centralwidget->height());
@@ -38,6 +41,7 @@ void PolarGraphWindow::onOpenDataPanelAction()
 {
     dataPanel.setFunctions(functions);
     dataPanel.setPlotLimits(fromRad,toRad);
+    dataPanel.setResolution(resolution);
     dataPanel.show();
 }
 
@@ -49,7 +53,7 @@ void PolarGraphWindow::onAboutAction()
         tr("This app was created by ArtNlk") );
 }
 
-void PolarGraphWindow::changePlotSettings(int functionListIndex, double _fromRad, double _toRad)
+void PolarGraphWindow::changePlotSettings(int functionListIndex, double _fromRad, double _toRad, int _resolution)
 {
     if (functionListIndex >= functions.size() || functionListIndex < 0)
     {
@@ -59,7 +63,9 @@ void PolarGraphWindow::changePlotSettings(int functionListIndex, double _fromRad
     currentFunction = functions[functionListIndex];
     fromRad = _fromRad;
     toRad = _toRad;
+    resolution = _resolution;
     plotter.setPlotLimits(fromRad,toRad);
+    plotter.setResolution(_resolution);
     QString message = QString("%1 plotted from %2 rad to %3 rad")
             .arg(QString::fromStdString(currentFunction->getName()), QString::number(fromRad,'f',2), QString::number(toRad,'f',2));
     statusBar()->showMessage(message);

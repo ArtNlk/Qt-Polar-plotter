@@ -43,6 +43,7 @@ private:
     QPen plotPen;
     QPen minBoundaryPen;
     QPen maxBoundaryPen;
+    QPen redPen;
 };
 
 #endif // POLARPLOTTER_H
