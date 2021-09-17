@@ -15,6 +15,7 @@ class PolarGraphWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit PolarGraphWindow(QWidget *parent = nullptr);
+    ~PolarGraphWindow();
 
 
 signals:

@@ -7,7 +7,7 @@ class PolarFunction
 {
 public:
     PolarFunction();
-    ~PolarFunction();
+    virtual ~PolarFunction() = default;
 
 public:
     virtual double eval(double theta);

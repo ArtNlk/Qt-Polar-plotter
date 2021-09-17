@@ -37,6 +37,14 @@ PolarGraphWindow::PolarGraphWindow(QWidget *parent) : QMainWindow(parent)
     ui.plotLabel->setPixmap(labelPixmap);
 }
 
+PolarGraphWindow::~PolarGraphWindow()
+{
+    for(PolarFunction* func : functions)
+    {
+        delete func;
+    }
+}
+
 void PolarGraphWindow::onOpenDataPanelAction()
 {
     dataPanel.setFunctions(functions);
